@@ -228,7 +228,7 @@ def _openai_completion_helper(
             break
         except openai.error.OpenAIError as e:
             logging.warning(f"OpenAIError: {e}.")
-            if "Please reduce your prompt" in str(e):
+            if "Please reduce your prompt" in str(e) or "Please reduce the length of the messages" in str(e):
                 kwargs["max_tokens"] = int(kwargs["max_tokens"] * 0.8)
                 logging.warning(f"Reducing target length to {kwargs['max_tokens']}, Retrying...")
                 if kwargs["max_tokens"] == 0:
